@@ -1,0 +1,140 @@
+#!/usr/bin/env python
+#
+# Knonking scenario GIoTTO.
+# Khalid Elgazzar
+# 2015/11/7
+#
+# Copyright 2015 Carnegie Mellon University
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+#http://stackoverflow.com/questions/2835559/parsing-values-from-a-json-file-in-python
+
+import uuid
+
+import os
+import sys
+
+import cv2
+import urllib2
+import json
+import requests
+
+from StringIO import StringIO
+
+import requests
+from PIL import Image
+from bs4 import BeautifulSoup
+
+from subprocess import call
+from subprocess import check_output
+
+from time import sleep
+import datetime
+
+fileDir = os.path.dirname(os.path.realpath(__file__)) #~/openface
+sys.path.append(fileDir)
+
+classifierFile = os.path.join(fileDir, 'openface/data/mydataset/reps/classifier.pkl')
+# Capturing the knocking person's face
+def capture_face():
+    DCS_IP = "192.168.1.106"
+    userauth = ('admin', '')
+
+    snapurl = "http://" + DCS_IP + "/top.htm"
+
+    r = requests.get(snapurl,  auth=userauth)
+    soup = BeautifulSoup(r.content)
+
+    # There are several <img> tags in page, so use border=0 attribute of 
+    # objective <img> to distinguish it
+    imgtag = soup.find_all("img", attrs={'border':0})
+    imgsrc = BeautifulSoup(str(imgtag[0])).img['src']
+    imgurl = "http://" + DCS_IP + "/" + imgsrc
+
+    img = requests.get(imgurl, auth=userauth)
+    knocker = Image.open(StringIO(img.content))
+    return knocker
+
+headers = {'content-type':'application/json'}
+#postSensor_uuid = "cec97274-ee4a-49e1-93ca-54fa841d8102"
+postSensor_uuid = "b3272cdd-0f74-4cb9-92fc-6baf5ee748de"
+#posturl = "http://buildingdepot.andrew.cmu.edu:82/service/sensor/{}/timeseries"
+posturl = "http://192.168.1.100:82/service/sensor/{}/timeseries"
+
+def postData(dataToPost,timeStr,sensorBD,sensorType):
+    payload = { "data":[{"value":dataToPost,"time":timeStr}],"value_type":sensorType}
+    #print json.dumps(payload)
+    #print posturl.format(sensorBD)
+    #print headers
+    r = requests.post(posturl.format(sensorBD),headers = headers,data = json.dumps(payload))
+    #print r.json()
+
+#domainName = "http://localhost/" # on mac
+#domainName = "http://http://192.168.1.101/" # on mac
+#domainName = "http://iotdemo.andrew.cmu.edu/" # on Linux
+domainName = "http://192.168.1.100/" # on Linux
+#documentRoot = "/Library/WebServer/Documents/" # on mac
+documentRoot = "/var/www/html/" # on linux
+snapshot_fileName = "knockerface.png"
+#snapshot_fileName = uuid.uuid4().hex+'.png'
+
+#print(snapshot_fileName+'\n')
+
+snapshot_loc = documentRoot + snapshot_fileName
+#snapshot_loc = "./images/examples/khalid1.png"
+#snapshot_url = domainName + snapshot_fileName
+snapshot_url = "http://buildingdepot.andrew.cmu.edu/"+snapshot_fileName
+
+#sensor_uuid = http://192.168.1.100:82/service/api/v1/data/id=b3272cdd-0f74-4cb9-92fc-6baf5ee748de/interval=10s/
+#http://buildingdepot.andrew.cmu.edu:82/service/api/v1/data/id=b90cac66-ae49-4e6d-9de5-12aed18e6a64/interval=10s/
+#sensor_uuid = http://192.168.1.100:82/service/api/v1/data/id=b90cac66-ae49-4e6d-9de5-12aed18e6a64/interval=10s/
+#sensor_uuid = "b90cac66-ae49-4e6d-9de5-12aed18e6a64"
+sensor_uuid = "291b949d-a6f2-49eb-808f-edfdb8e11100"
+base_url = "http://192.168.1.100:82/service/api/v1/data/id="
+res = "/interval=5s/"
+url = base_url + sensor_uuid + res
+
+#response = urllib2.urlopen(url)
+#data = json.load(response)
+
+while True:
+    response = requests.get(url)
+    data = response.json()
+    val = []  
+    if bool(data["data"]):
+        for x,y,z in data["data"]["series"][0]["values"]:
+            val.append(z)
+        print("List of current values: {}".format(val))
+
+        knocktime = data["data"]["series"][0]["values"][0][1]
+	timeToPost = datetime.datetime.fromtimestamp(int(knocktime)).strftime('%H:%M:%S')
+        #status = data["data"]["series"][0]["values"][0][2] #first reading in the response
+        #status = data["data"]["series"][0]["values"][-2][2] # last reading in the resposne
+        if "knocking" in val:
+            knocker_face = capture_face()
+            knocker_face.save(snapshot_loc)
+            #call("./openface/demos/classifier.py", "infer ./openface/data/mydataset/reps/classifier.pkl ./openface/images/examples/khalid1.png")
+            call(["scp", snapshot_loc, "synergy@buildingdepot.andrew.cmu.edu:/srv/buildingdepot/Documentation/build/html"])
+            try:
+                knocker_name = check_output(["./openface/demos/classifier.py", "infer", classifierFile, snapshot_loc])[:-1]
+                #knocker_name = check_output(["./demos/classifier.py", "infer", "/Users/Elgazzar/openface/data/mydataset/reps/classifier.pkl","./images/examples/khalid1.png"])
+            except:
+                knocker_name = "Unknown"
+            print("Knocker name: {}".format(knocker_name));
+    
+            dataToPost={"knocking_user_name":knocker_name,"knocking_user_email":"cmugiotto@gmail.com","img_url":snapshot_url,"text_content":timeToPost}
+            postData(json.dumps(dataToPost),knocktime,postSensor_uuid,"Location")
+	    print ("Posted data:{}".format(dataToPost))
+	    print ('\n')
+    sleep(3) #sleep 3sec 
