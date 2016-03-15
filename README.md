@@ -1,4 +1,4 @@
-# Edge-Analytics
+# Leveraging Edge-Analytics in IoT
 
 *Knocking demo using the Giotto Stack.*
 
