@@ -20,7 +20,7 @@ The [knocking.conf] (./knocking.conf) file holds the configurations required for
 + knockingSensor_uuid, where knocking sensor posts time-series data
 + postSensor_uuid, where google cards information are posted
 
-![Schemaic diagram of the knocking app.](./architecture.pdf)
+![Schemaic diagram of the knocking app.](./architecture.jpg)
 
 # Licensing
 Unless otherwise stated, the source code and trained Torch and Python
