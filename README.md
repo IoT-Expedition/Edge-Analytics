@@ -22,6 +22,10 @@ The [knocking.conf] (./knocking.conf) file holds the configurations required for
 + knockingSensor_uuid, where knocking sensor posts time-series data
 + postSensor_uuid, where google cards information are posted
 
+
+# Generating Google Now cards
+Currently, the Google Now API is not avialable for public. You need to [whitelist your email with Google](https://support.google.com/a/answer/60751?hl=en) to be ble to access their Now API. Then, you need to create an account with Google developer if you don't have one already. Once you register, you will receive a client id and a client secret tokens. Those go into client_id and client_secret parementers in the [client_secret.json file](./client_secret.json). Finally, you need to request and access token and replace any access_token instance in the files: [makeCard.py](./makeCard.py)
+
 # Licensing
 Unless otherwise stated, the source code and trained Torch and Python
 model files are copyright Carnegie Mellon University and licensed
