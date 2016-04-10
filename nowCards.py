@@ -8,8 +8,7 @@ knockername = knockermail = knockerimage = knockertext = "dummy"
 
 def check():
 	# URL of KNOCKER sensor
-	# knockerURL = "http://iotdemo.andrew.cmu.edu:82/service/api/v1/data/id=b3272cdd-0f74-4cb9-92fc-6baf5ee748de/email=gokulk@andrew.cmu.edu/interval=1d/"
-	knockerURL = "http://192.168.1.100:82/service/api/v1/data/id=b3272cdd-0f74-4cb9-92fc-6baf5ee748de/interval=5s/"
+	knockerURL = "http://buildingdepot.andrew.cmu.edu:82/service/api/v1/data/id=b3272cdd-0f74-4cb9-92fc-6baf5ee748de/interval=5s/"
 
 	# Check if the URL is valid
 	knockerstatuscode = (requests.head(knockerURL).status_code)

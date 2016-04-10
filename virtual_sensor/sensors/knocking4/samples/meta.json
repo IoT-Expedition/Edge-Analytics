@@ -1,0 +1,1 @@
+[{"command": "sample", "filename": "1.csv", "sensor": "knocking4", "label": "knocking", "sampleNum": 3}, {"sensor": "knocking4", "sampleNum": 3, "command": "sample", "filename": "2.csv", "label": "knocking"}]
