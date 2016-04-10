@@ -39,9 +39,13 @@ Currently, the Google Now API is not avialable for public. You need to [whitelis
 + Turn on the raspberry pi serving to the TI sensor tag and make sure that it is conneced to the internet (wired or wireless).
 + Run [virtualSensorMonitor.py](./virtual_sensor/virtualSensorMonitor.py).
 + Make sure that the camera is connected to the Internet.
-+ Connect to the GIoTTO platform (i.e., server running BuildingDepot) and run the following command:
++ Connect to the GIoTTO platform (i.e., server running BuildingDepot) and run the following commands:
+```python
+service docker restart
+docker run -p 9000:9000 -p 8000:8000 -v /srv/buildingdepot/Documentation/build/html/:/var/www/html -t -i bamos/openface /bin/bash```
 
-```docker run -p 9000:9000 -p 8000:8000 -v /srv/buildingdepot/Documentation/build/html/:/var/www/html -t -i bamos/openface /bin/bash ```
++ Go to cd ./knocking
++ Run ./knocking.py
 
 # Licensing
 Unless otherwise stated, the source code and trained Torch and Python
