@@ -13,7 +13,7 @@ This is an open source application built on top of the GIoTTO stack to showcase 
 + IP camera
 + Internet connection
 
-# How does it work?
+# Configuration file
 The [knocking.conf] (./knocking.conf) file holds the configurations required for the demo:
 + camera_ip, the IoT camera IP in IPv4 format 0.0.0.0
 + BD_domain, url for buildingdepot
