@@ -35,9 +35,9 @@ This demo uses OpenFace for face detection. OpenFace is a Python and Torch imple
 Currently, the Google Now API is not avialable for public. You need to [whitelist your email with Google](https://support.google.com/a/answer/60751?hl=en) to be ble to access their Now API. Then, you need to create an account with Google developer if you don't have one already. Once you register, you will receive a client id and a client secret tokens. Those go into client_id and client_secret parementers in the [client_secret.json file](./client_secret.json). You will need to request and access token and replace any access_token instance in the files: [makeCard.py](./makeCard.py). To get an access token, you just need to put your credentials in [refreshtoken.py](./refreshtoken.py) file. Google cards in this demo contains actions buttons (e.g., call and send SMS). Some of these actions require background processing, which we provide in an Android app in this folder [AndroidDLApp](./AndroidDLApp). To succesfuly generate cards on a Google-whitelisted account, all card actions/conditions must be satisfied. Hence, you need to install this app on the mobile device participating in the demo. No need to run it though.
 
 # Running the demo
-+ Make sure the the TI sensor tag is runing and the green light is flashing.
-+ Turn on the raspberry pi serving to the TI sensor tag and make sure that it is conneced to the internet (wired or wireless).
-+ Run [virtualSensorMonitor.py](./virtual_sensor/virtualSensorMonitor.py).
++ Make sure the the TI sensor tag is runing and the green light is flashing
++ Turn on the raspberry pi serving to the TI sensor tag and make sure that it is conneced to the internet (wired or wireless)
++ Run [virtualSensorMonitor.py](./virtual_sensor/virtualSensorMonitor.py)
 + Make sure that the camera is connected to the Internet.
 + Connect to the GIoTTO platform (i.e., server running BuildingDepot) and run the following commands:
 ```python
@@ -46,6 +46,7 @@ docker run -p 9000:9000 -p 8000:8000 -v /srv/buildingdepot/Documentation/build/h
 ```
 + Go to cd ./knocking
 + Run ./knocking.py
++ Enjoy the demo
 
 # Licensing
 Unless otherwise stated, the source code and trained Torch and Python
