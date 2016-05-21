@@ -5,7 +5,7 @@ import refreshtoken
 import jsonFormat
 
 url = "https://www.googleapis.com/now/v1/users/me/cards/"
-headers = {'Authorization': 'Bearer access_token',
+headers = {'Authorization': 'Bearer ya29.LAN0XMicjHdY60qjSYltcdbAUhW2kzOxDrOAXns9NH0NN84MOBUsQ',
 				'Content-Type': 'application/json'}
 
 

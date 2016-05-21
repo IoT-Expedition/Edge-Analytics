@@ -56,9 +56,9 @@ def triggerCardfunction(knockerdetails):
 	if(not(make == "None")):
 		free_start = getTime(make[0])
 		free_end   = getTime(make[1])
-		display_text_knocker = "Anind is free between " + str(free_start) + " and " + str(free_end) + " to meet."
+		display_text_knocker = "Andrew is free between " + str(free_start) + " and " + str(free_end) + " to meet."
 	else: 
-		display_text_knocker = " Anind has No free time "
+		display_text_knocker = " Andrew has No free time "
 	jsonFormat.payload_knocker['content'] ['genericCard'] ['content'] ['displayString'] = display_text_knocker
 	# print display_text_knocker
 
@@ -104,7 +104,7 @@ def  callCardTrigger(flag):
 	getNowCardsList = requests.get(url, headers = headers)
 	# print json.dumps(getNowCardsList.json(), indent = 2)
 	
-	# Payload define for knocker and Anind
+	# Payload define for knocker and Andrew
 	if(flag==0): 
 		payload = jsonFormat.payload_anind
 	else:

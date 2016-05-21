@@ -14,11 +14,11 @@ payload_anind = {"content": {
    },
    "tapAction": {
     "urls": [
-     "http://buildingdepot.andrew.cmu.edu/knockerface.png"
+     "http://cmu.buildingdepot.org/knockerface.png"
     ]
    },
    "logo": {
-    "url": "http://192.168.1.100/cmu1.png"
+    "url": "http://cmu.buildingdepot.org/cmu1.png"
    },
    "buttons": [
         {
@@ -41,14 +41,14 @@ payload_anind = {"content": {
         }
       ],
     "image": {
-        "url": "http://192.168.1.100/knockerface.png"
+        "url": "http://cmu.buildingdepot.org/knockerface.png"
       },
   },
   "locales": [
    "en"
   ],
   "justification": {
-   "displayString": "Issued to Anind Dey since his door was knocked"
+   "displayString": "Issued to Andrew Dey since his door was knocked"
   }
  }
 }
@@ -74,7 +74,7 @@ payload_knocker = {"content": {
     ]
    },
    "logo": {
-    "url": "http://192.168.1.100/cmu1.png"
+    "url": "http://cmu.buildingdepot.org/cmu1.png"
    },
    "buttons": [
         {
@@ -92,7 +92,7 @@ payload_knocker = {"content": {
    "en"
   ],
   "justification": {
-   "displayString": "Issued since you knocked Anind's door"
+   "displayString": "Issued since you knocked Andrew's door"
   }
  }
 }
