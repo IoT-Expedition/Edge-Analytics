@@ -5,7 +5,7 @@
 ---
 This is an open source application built on top of the GIoTTO stack to showcase how an IoT app can leverage the stack functionality to offer advanced features and complex interactions between multiple IoT entities. It also demonstrates how Edge Analytics reduces the end-to-end time required for IoT scenarios. The schematic diagram of the application is shown in Figure 1. 
 
-![Schemaic diagram of the knocking app.](./architecture.jpg)
+![Schemaic diagram of the knocking app.](./https://github.com/IoT-Expedition/Edge-Analytics/blob/master/architecture.jpg)
 
 # Required Devices
 + [TI sensor tag] (http://www.ti.com/tool/cc2541dk-sensor)
