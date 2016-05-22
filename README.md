@@ -1,6 +1,7 @@
 # Leveraging Edge-Analytics in IoT
 
 *Knocking demo using the Giotto Stack.*
+*A Web version of this documentation is [HERE](http://iot-expedition.github.io/Edge-Analytics)*
 
 ---
 This is an open source application built on top of the GIoTTO stack to showcase how an IoT app can leverage the stack functionality to offer advanced features and complex interactions between multiple IoT entities. It also demonstrates how Edge Analytics reduces the end-to-end time required for IoT scenarios. The schematic diagram of the application is shown in Figure 1. 
