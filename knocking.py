@@ -3,8 +3,9 @@
 # Knonking scenario GIoTTO.
 # Khalid Elgazzar
 # 2015/11/7
+# updated 2016/5/23
 #
-# Copyright 2015 Carnegie Mellon University
+# Copyright 2015-2016 Carnegie Mellon University
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -53,41 +54,11 @@ classifierFile = '../openface/data/mydataset/reps/classifier.pkl'
 #classifierFile = os.path.join(fileDir, '~/openface/data/mydataset/reps/classifier.pkl')
 #classifierFile = '/root/src/openface/data/mydataset/reps/classifier.pkl')
 
-"""settingFilePath = "./knockingSettings.json"
-settings = json.loads(open(settingFilePath,'r').read())
-
-def get_access_token():
-    '''Get OAuth access token'''
-    headers = {'content-type': 'application/json'}
-    url = settings['bd_rest_api']['domain']
-    url += ':' + settings['bd_rest_api']['port'] 
-    url += '/oauth/access_token/client_id='
-    url += settings['oauth']['client_id']
-    url += '/client_secret='
-    url += settings['oauth']['client_key']
-    result = requests.get(url, headers=headers, verify=False)
-
-    if result.status_code == 200:
-        dic = result.json()
-        return dic['access_token']
-    else:
-        return ''"""
-"""access_token = bdHelper.get_oauth_token()
-
-headers = {
-            'content-type': 'application/json',
-            'Authorization': 'Bearer ' + access_token
-            }"""
-
 postSensor_uuid = bdHelper.others["postSensor_uuid"] #7906d606-40be-419e-9dfd-6eabe28e475c
 BD_domain = bdHelper.bd_rest_api['domain']
-posturl = BD_domain+":82/service/sensor/{}/timeseries"
 
-#posturl = BD_domain + ':' + settings['bd_rest_api']['port'] 
-#posturl += settings['bd_rest_api']['api_prefix'] + '/sensor/timeseries'
-
-documentRoot = "/Library/WebServer/Documents/" # on mac
-#documentRoot = bdHelper.bd_rest_api['documentRoot']
+#documentRoot = "/Library/WebServer/Documents/" # on mac
+documentRoot = bdHelper.bd_rest_api['documentRoot']
 snapshot_fileName = bdHelper.others['snapshot_fileName']
 snapshot_loc = documentRoot + snapshot_fileName
 snapshot_url = BD_domain + '/'+ snapshot_fileName
@@ -122,52 +93,31 @@ def capture_face():
     knocker = Image.open(StringIO(img.content))
     knocker.save(snapshot_loc)
 
-"""def postData(dataToPost,sensorBD,sensorType):
-    data_array = [
-        {
-            "seonor_id":sensorBD,
-            "value_type":sensorType,
-            "samples":[{
-                "time":time(),
-                "value":dataToPost
-            }]
-        }
-    ]
-                
-    result = requests.post(posturl, data=json.dumps(data_array), headers=headers)"""
-
 while True:
     end_time = int(time())
-    start_time = int(time())- 0
+    start_time = int(time())- 15
 
     knockingSensor_uuid = bdHelper.others['knockingSensor_uuid'] #"516b2f6e-ce23-49e6-b56e-b5269c142a74"
-    
-    #data = bdHelper.get_timeseries_data(knockingSensor_uuid, start_time, end_time)
-    
-    data=["knocking", "silent"]
+    data = bdHelper.get_timeseries_data(knockingSensor_uuid, start_time, end_time)
+    #data=["knocking", "silent"]
     if data:
         print("List of current values: {}".format(data));
-        
         #knocktime = data["data"]["series"][0]["values"][0][1]
         timeToPost = datetime.datetime.fromtimestamp(int(time())).strftime('%H:%M:%S')
         #status = data["data"]["series"][0]["values"][0][2] #first reading in the response
         #status = data["data"]["series"][0]["values"][-2][2] # last reading in the resposne
         if "knocking" in data:
-            #capture_face()
-            capture_face_local()
-            #call("./openface/demos/classifier.py", "infer ./openface/data/mydataset/reps/classifier.pkl ./openface/images/examples/khalid1.png")
+            capture_face()
+            #capture_face_local()
             try:
                 #knocker_name = check_output(["/root/srv/openface/demos/classifier.py", "infer", classifierFile, snapshot_loc])[:-1]
                 knocker_name = check_output(["../openface/demos/classifier.py", "infer", classifierFile, snapshot_loc])[:-1]
-                #knocker_name = check_output(["./demos/classifier.py", "infer","/Users/Elgazzar/openface/data/mydataset/reps/classifier.pkl","./images/examples/khalid1.png"])
             except:
                 knocker_name = "Unknown"
             print("Knocker name: {}".format(knocker_name));
             
             dataToPost={"knocking_user_name":knocker_name,"knocking_user_email":"cmugiotto@gmail.com","img_url":snapshot_url,"text_content":timeToPost}
-            dataToPost = json.dumps(dataToPost)
-            #dataToPost={"knocking_user_name":"Khalid","knocking_user_email":"cmugiotto@gmail.com","img_url":snapshot_url,"text_content":time()}
-            
+            dataToPost = json.dumps(dataToPost) 
             data_array = [
                 {
                     "sensor_id":postSensor_uuid,

@@ -1,28 +1,21 @@
 {
 	"bd_rest_api":{
-		"domain":"http://130.15.3.145",
-		"domain1":"https://cmu.buildingdepot.org",
+		"domain":"https://cmu.buildingdepot.org",
 		"port":"82",
 		"api_prefix":"/api",
 		"documentRoot":"/srv/buildingdepot/Documentation/build/html/"
 	},
 
-	"oauth1":{
+	"oauth":{
 		"client_id":"qUf9CcwLTIWVOcSNItmHU1KyHgdAr4rnETR4cjWQ",
 		"client_key":"r3X4PbuiF5OhcSyodxIwaLCwWIwxMkyEPNHgQ125PYE1aWv1SG"
 	},
-	"oauth":{
-		"client_id":"NFrHJmXUJPyNbcEVm0Hk7QJ5w8TPR4j8XwIuRlqw",
-		"client_key":"vN4JgfNmzGg7OA9BJ54jBOxRIbhoFvA1Cit6Q5wSGg6WRGFaJ3"
-	},
-	
+
 	"others":{
 		"camera_ip":"128.2.213.20",
-		"res":"/interval=15d/",
-		"knockingSensor_uuid1":"516b2f6e-ce23-49e6-b56e-b5269c142a74",
-		"knockingSensor_uuid":"62dc212f-a247-41da-8d09-817da5a95d62",
-		"postSensor_uuid":"015aa221-9345-4b81-a635-1838aed6b1e5",
-		"postSensor_uuid1":"7906d606-40be-419e-9dfd-6eabe28e475c",
+		"res":"/interval=15s/",
+		"knockingSensor_uuid":"516b2f6e-ce23-49e6-b56e-b5269c142a74",
+		"postSensor_uuid":"7906d606-40be-419e-9dfd-6eabe28e475c",
 		"snapshot_fileName":"knockerface.png"
 	}
 }
